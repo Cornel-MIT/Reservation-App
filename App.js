@@ -6,6 +6,7 @@ import{createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Restaurants from './Pages/Resturants';
 import Details from './Pages/Details';
 import Reserve from './Pages/Reserve';
+import Home from './Pages/Home';
 
 
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="res" component={Restaurants} />
         <Stack.Screen name="details" component={Details} />
         <Stack.Screen name="reserve" component={Reserve} />
