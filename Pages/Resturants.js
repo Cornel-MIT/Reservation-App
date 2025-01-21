@@ -1,60 +1,42 @@
-import React from "react";
-import { View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-
-const resturants = [
-  {
-    image: require("../assets/Res/robert-bye-4UGlx_OXqgs-unsplash.jpg"),
-    name: "Unsplash Reasturant",
-    Descripton: "Description 1",
-    Places: "Places 1",
-  },
-  {
-    image: require("../assets/Res/Screenshot_20250119_192154_Instagram.jpg"),
-    name: "Galata Bakery and Restaurant",
-    Descripton: "Description 2",
-    Places: "Places 2",
-  },
-  {
-    image: require("../assets/Res/Screenshot_20250119_192412_Facebook.jpg"),
-    name: "House of Ribs",
-    Descripton: "Description 3",
-    Places: "Places 3",
-  },
-  {
-    image: require("../assets/Res/gatsbybynight.jpg"),
-    name: "Gatsby",
-    Descripton: "The Gatsby Station offers gourmet food and coffee from South Africa's first 1965 Land Rover Forward Control Food Truck.",
-    Places: "Places 4",
-  },
-  {
-    image: require("../assets/Res/Screenshot_20250119_223404_Facebook.jpg"),
-    name: "Mad Nomad",
-    Descripton: "Description 5",
-    Places: "Places 5",
-  },
-];
+import axios from 'axios';
 
 const Restaurants = ({ navigation }) => {
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  const fetchRestaurants = async () => {
+    try {
+      const response = await axios.get('https://localhost:5000/api/restaurants');
+      setRestaurants(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleSelector = (restaurant) => {
     navigation.navigate("details", { restaurant });
   };
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.header}>Restaurants</Text> */}
       <FlatList 
-        data={resturants} 
+        data={restaurants} 
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleSelector(item)} style={styles.cardContainer}>
             <View style={styles.card}>
-              <Image source={item.image} style={styles.image} />
+              <Image source={{ uri: item.pictures[0] }} style={styles.image} />
               <View style={styles.textContainer}>
                 <Text style={styles.resName}>{item.name}</Text>
-                <Text style={styles.resDesc}>{item.Descripton}</Text>
+                <Text style={styles.resDesc}>{item.description}</Text>
                 <View style={styles.locationContainer}>
                   <Ionicons name="location" size={16} color="gray" />
-                  <Text style={styles.resPlace}>{item.Places}</Text>
+                  <Text style={styles.resPlace}>{item.place}</Text>
                 </View>
                 <TouchableOpacity style={styles.reserveButton} onPress={() => handleSelector(item)}>
                   <Text style={styles.reserveButtonText}>Reserve Now</Text>
@@ -74,12 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#f8f8f8",
-  },
-  header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
   },
   cardContainer: {
     marginBottom: 20,
