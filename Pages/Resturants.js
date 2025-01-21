@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: '#FAF3F0',
   },
   cardContainer: {
     marginBottom: 20,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   reserveButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#8A1538',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

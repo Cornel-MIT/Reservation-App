@@ -13,15 +13,16 @@ import { useRoute } from "@react-navigation/native";
 
 // const { width } = Dimensions.get("window");
 
-const Details = ({ navigation }) => {
+const CuisineDetails = ({ navigation }) => {
   const route = useRoute();
-  const { image, name, Descripton, Places } = route.params.restaurant;
+  const { image, food, description, Places, Resimage } = route.params.restaurant;
   return (
     <ScrollView style={styles.container}>
       <Image source={image} style={styles.image} />
       <View style={styles.info}> 
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.description}>{Descripton}</Text>
+      <Text style={styles.title}>{food}</Text>
+      <Text style={styles.description}>{description}</Text>
+      <Image source={Resimage} style={styles.resimage} />
       <Text style={styles.places}>{Places}</Text>
       </View>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("reserve")}>
@@ -42,6 +43,13 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 16,
   },
+  resimage: {
+    width: '100%',
+    height: 300,
+    marginBottom: 16,
+    borderRadius: 20,
+    padding: 0,
+  },
     info: {
         backgroundColor: '#fff',
         borderTopEndRadius: 20,
@@ -61,9 +69,11 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   description: {
-    fontSize: 16,
+    fontSize: 12,
     marginBottom: 2,
     marginLeft: 16,
+    color: 'gray',
+    letterSpacing: 1,
   },
   places: {
     fontSize: 16,
@@ -87,4 +97,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default Details;
+export default CuisineDetails;

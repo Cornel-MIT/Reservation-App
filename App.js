@@ -12,6 +12,8 @@ import UserDashboard from './Pages/UserDashboard';
 import AdminDashboard from './Pages/AdminDashboard';
 import SuperAdminDashboard from './Pages/SuperAdminDashboard';
 import AssignAdminScreen from './Pages/AssignAdminScreen';
+import Home from './Pages/Home';
+import CuisineDetails from './Pages/cuisineDetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,6 +39,13 @@ const App = () => {
         <Stack.Screen name="AssignAdmin" component={AssignAdminScreen} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="home" component={Home} />
+        <Stack.Screen name="res" component={Restaurants} />
+        <Stack.Screen name="details" component={Details} />
+        <Stack.Screen name="cuisinedetails" component={CuisineDetails} />
+        <Stack.Screen name="reserve" component={Reserve} />
+      </Stack.Navigator>  
     </NavigationContainer>
   );
 };
