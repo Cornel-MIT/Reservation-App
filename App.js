@@ -14,13 +14,15 @@ import SuperAdminDashboard from './Pages/SuperAdminDashboard';
 import AssignAdminScreen from './Pages/AssignAdminScreen';
 import Home from './Pages/Home';
 import CuisineDetails from './Pages/cuisineDetails';
+import Table from './Pages/Table';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => (
   <Tab.Navigator>
-    <Tab.Screen name="Restaurants" component={Restaurants} />
+    <Tab.Screen name="res" component={Restaurants} />
     <Tab.Screen name="Details" component={Details} />
     <Tab.Screen name="Reserve" component={Reserve} />
   </Tab.Navigator>
@@ -29,23 +31,21 @@ const TabNavigator = () => (
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="table">
+        <Stack.Screen name="res" component={Restaurants} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="cuisineDetails" component={CuisineDetails} />
+        <Stack.Screen name="Reserve" component={Reserve} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} />
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
         <Stack.Screen name="SuperAdminDashboard" component={SuperAdminDashboard} />
-        <Stack.Screen name="AssignAdmin" component={AssignAdminScreen} />
+        <Stack.Screen name="AssignAdminScreen" component={AssignAdminScreen} />
+        <Stack.Screen name="table" component={Table} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
-      <Stack.Navigator>
-        <Stack.Screen name="home" component={Home} />
-        <Stack.Screen name="res" component={Restaurants} />
-        <Stack.Screen name="details" component={Details} />
-        <Stack.Screen name="cuisinedetails" component={CuisineDetails} />
-        <Stack.Screen name="reserve" component={Reserve} />
-      </Stack.Navigator>  
     </NavigationContainer>
   );
 };

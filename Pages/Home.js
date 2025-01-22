@@ -11,7 +11,7 @@ import {
 
 const Home = ({ navigation }) => {
   const handleSelector = (restaurant) => {
-    navigation.navigate("cuisinedetails", { restaurant });
+    navigation.navigate("cuisineDetails", { restaurant });
   };
   const cuisines = [
     {
