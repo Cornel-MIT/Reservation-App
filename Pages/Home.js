@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
   },
   heroText: {
     color: "#FFFFFF",
+    fontFamily: "times new roman",
+    fontStyle: "italic",
     fontSize: 24,
     fontWeight: "900",
     justifyContent: "center",
