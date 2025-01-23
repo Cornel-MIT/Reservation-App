@@ -3,7 +3,7 @@ const { createRestaurant, getRestaurants } = require('../controllers/restaurantC
 const authMiddleware = require('../middlewares/authMiddleware');
 const router = express.Router();
 
-router.post('/', authMiddleware, createRestaurant);
-router.get('/', getRestaurants);
+router.post('/restaurants', authMiddleware, createRestaurant);
+router.get('/restaurants', getRestaurants);
 
 module.exports = router;
