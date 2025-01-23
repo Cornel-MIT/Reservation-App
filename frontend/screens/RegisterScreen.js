@@ -12,6 +12,7 @@ const RegisterScreen = () => {
   const [role, setRole] = useState('user');  
 
 const handleRegister = async () => {
+  console.log('Register button clicked');
     if (!username || !email || !password) {
       Alert.alert('Error', 'All fields are required!');
       return;
@@ -25,13 +26,13 @@ const handleRegister = async () => {
         role,
       });
   
-      console.log('Response from backend:', response.data);  // Log the response
+      console.log('Response from backend:', response.data);  
       if (response.status === 201) {
         Alert.alert('Success', 'Registration successful. You can now login!');
-        navigation.navigate('Login');  // Navigate back to Login after successful registration
+        navigation.navigate('Login');  
       }
     } catch (error) {
-      console.error('Registration Error:', error);  // Log the error for troubleshooting
+      console.error('Registration Error:', error);  
       Alert.alert('Registration Error', error.response?.data?.message || 'Something went wrong!');
     }
   };  

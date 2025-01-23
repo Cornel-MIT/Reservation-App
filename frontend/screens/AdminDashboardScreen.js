@@ -1,4 +1,3 @@
-// screens/AdminDashboardScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
