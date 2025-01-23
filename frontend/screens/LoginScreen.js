@@ -1,4 +1,3 @@
-// frontend/screens/LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
@@ -18,7 +17,7 @@ const LoginScreen = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post('http://192.168.1.219:5000/api/auth/login', { email, password });
       const { token, userRole } = response.data;
 
       await AsyncStorage.setItem('userToken', token);

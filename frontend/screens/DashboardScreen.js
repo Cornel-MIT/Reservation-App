@@ -16,7 +16,7 @@ const DashboardScreen = ({ navigation }) => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/me', {
+        const response = await axios.get('http://192.168.1.219/api/auth/me', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(response.data);

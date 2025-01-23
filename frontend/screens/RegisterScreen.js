@@ -18,7 +18,7 @@ const handleRegister = async () => {
     }
   
     try {
-      const response = await axios.post('http://10.0.2.2:5000/api/auth/register', {
+      const response = await axios.post('http://192.168.1.219:5000/api/auth/register', {
         username,
         email,
         password,

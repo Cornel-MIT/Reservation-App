@@ -1,4 +1,3 @@
-// screens/SuperAdminDashboardScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +12,7 @@ const SuperAdminDashboardScreen = ({ navigation }) => {
   const fetchAdmins = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await axios.get('http://localhost:5000/api/admins', {
+      const response = await axios.get('http://192.168.1.219:5000/api/admins', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

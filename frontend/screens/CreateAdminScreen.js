@@ -17,7 +17,7 @@ const CreateAdminScreen = ({ navigation }) => {
       const token = await AsyncStorage.getItem('userToken');
 
       const response = await axios.post(
-        'http://localhost:5000/api/admins',
+        'http://192.168.1.219/api/admins',
         { username, email, password },
         { headers: { Authorization: `Bearer ${token}` } }
       );
