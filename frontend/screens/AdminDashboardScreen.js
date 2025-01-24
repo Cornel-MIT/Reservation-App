@@ -4,11 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const AdminDashboardScreen = ({ navigation }) => {
-  const [reservations, setReservations] = useState([]); // List of reservations for the admin's restaurant
-  const [loading, setLoading] = useState(true); // Loading state while fetching data
-  const [error, setError] = useState(''); // Store any errors that occur
+  const [reservations, setReservations] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Fetch the reservations that belong to the admin's restaurant
   const fetchReservations = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -35,7 +34,7 @@ const AdminDashboardScreen = ({ navigation }) => {
       <Text style={styles.reservationText}>Time: {item.time}</Text>
       <Button
         title="View Details"
-        onPress={() => Alert.alert('Reservation Details', `Details for ${item.customerName}`)} // View reservation details
+        onPress={() => Alert.alert('Reservation Details', `Details for ${item.customerName}`)} 
       />
     </View>
   );

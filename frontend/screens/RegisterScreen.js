@@ -11,8 +11,8 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');  
 
-const handleRegister = async () => {
-  console.log('Register button clicked');
+  const handleRegister = async () => {
+    console.log('Register button clicked');
     if (!username || !email || !password) {
       Alert.alert('Error', 'All fields are required!');
       return;
@@ -28,8 +28,8 @@ const handleRegister = async () => {
   
       console.log('Response from backend:', response.data);  
       if (response.status === 201) {
-        Alert.alert('Success', 'Registration successful. You can now login!');
-        navigation.navigate('Login');  
+        Alert.alert('Success', 'Registration successful. Good luck with your Reservations!!');
+        navigation.navigate('SuperAdminDashboard');  
       }
     } catch (error) {
       console.error('Registration Error:', error);  
