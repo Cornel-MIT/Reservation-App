@@ -14,27 +14,38 @@ import SuperAdminDashboard from './Pages/SuperAdminDashboard';
 import AssignAdminScreen from './Pages/AssignAdminScreen';
 import Home from './Pages/Home';
 import CuisineDetails from './Pages/cuisineDetails';
-import Table from './Pages/Table';
-
+import TableSelection from './Pages/Table';
+import GroundFloor from './Pages/GroundFloor';
+import FirstFloor from './Pages/FirstFloor';
+import SecondFloor from './Pages/SecondFloor';
+import Rooftop from './Pages/Rooftop';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => (
   <Tab.Navigator>
-    <Tab.Screen name="res" component={Restaurants} />
+    <Tab.Screen name="Restaurants" component={Restaurants} />
     <Tab.Screen name="Details" component={Details} />
     <Tab.Screen name="Reserve" component={Reserve} />
+    <Tab.Screen name="GroundFloor" component={GroundFloor} />
+    <Tab.Screen name="FirstFloor" component={FirstFloor} />
+    <Tab.Screen name="SecondFloor" component={SecondFloor} />
+    <Tab.Screen name="Rooftop" component={Rooftop} />
   </Tab.Navigator>
 );
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="table">
-        <Stack.Screen name="res" component={Restaurants} />
+      <Stack.Navigator initialRouteName="TableSelection">
+        <Stack.Screen name="GroundFloor" component={GroundFloor} />
+        <Stack.Screen name="FirstFloor" component={FirstFloor} />
+        <Stack.Screen name="SecondFloor" component={SecondFloor} />
+        <Stack.Screen name="Rooftop" component={Rooftop} />
+        <Stack.Screen name="Restaurants" component={Restaurants} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="cuisineDetails" component={CuisineDetails} />
+        <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
         <Stack.Screen name="Reserve" component={Reserve} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
@@ -43,7 +54,7 @@ const App = () => {
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
         <Stack.Screen name="SuperAdminDashboard" component={SuperAdminDashboard} />
         <Stack.Screen name="AssignAdminScreen" component={AssignAdminScreen} />
-        <Stack.Screen name="table" component={Table} />
+        <Stack.Screen name="TableSelection" component={TableSelection} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
