@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import NavBar from "./NavBar";
 import GroundFloor from "./GroundFloor";
 import FirstFloor from "./FirstFloor";
 import SecondFloor from "./SecondFloor";
@@ -18,7 +17,7 @@ const TableSelection = () => {
           tabBarActiveTintColor: '#FFF',
           tabBarInactiveTintColor: '#000',
           tabBarStyle: {
-            backgroundColor: '#8A1538',
+            backgroundColor: '#8A1538'
           },
           tabBarIndicatorStyle: {
             backgroundColor: '#FFF',
