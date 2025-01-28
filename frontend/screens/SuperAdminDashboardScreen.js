@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, FlatList, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const SuperAdminDashboardScreen = ({ navigation }) => {
-  const [admins, setAdmins] = useState([]); // To store the list of general admins
-  const [loading, setLoading] = useState(true); // To handle loading state
-  const [error, setError] = useState(''); // To store any errors
+  const [admins, setAdmins] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(''); 
 
-  // Fetch general admins (you can extend this to fetch restaurants or other data)
   const fetchAdmins = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await axios.get('http://192.168.1.219:5000/api/admins', {
+      if (!token) {
+        throw new Error('No token found');
+      }
+  
+      const response = await axios.get('http://localhost:5000/api/admins', { // Correct the endpoint path here.
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
       setAdmins(response.data);
-      setLoading(false);
     } catch (err) {
-      setError('Failed to load admins');
+      setError('Failed to load admins: ' + (err.response?.data?.message || err.message));
+    } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchAdmins();
   }, []);
 
-  // Handle creating a new general admin
   const handleCreateAdmin = () => {
-    navigation.navigate('CreateAdmin'); // Navigate to the screen where super admin can create new admins
+    navigation.navigate('CreateAdmin'); 
   };
 
   const renderAdminItem = ({ item }) => (
@@ -38,7 +41,7 @@ const SuperAdminDashboardScreen = ({ navigation }) => {
       <Text style={styles.adminText}>{item.username}</Text>
       <Button
         title="View Details"
-        onPress={() => Alert.alert('Admin Details', `Details for ${item.username}`)} // Display admin details (can be extended)
+        onPress={() => Alert.alert('Admin Details', `Details for ${item.username}`)} 
       />
     </View>
   );
@@ -51,7 +54,7 @@ const SuperAdminDashboardScreen = ({ navigation }) => {
       <Button title="Create New Admin" onPress={handleCreateAdmin} />
 
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <FlatList
           data={admins}

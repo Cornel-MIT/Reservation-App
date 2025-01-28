@@ -3,15 +3,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
+
+// Import routes
 const restaurantRoutes = require("./routes/restaurantRoutes");
 const userRoutes = require('./routes/userRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
-const authRoutes = require('./routes/authRoutes'); 
-
+const authRoutes = require('./routes/authRoutes'); // Auth Routes
+const adminRoutes = require('./routes/adminRoutes');
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,10 +26,14 @@ mongoose
 app.use("/api/restaurants", restaurantRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reservations', reservationRoutes);
-app.use('/api/auth', authRoutes); 
+app.use('/api/auth', authRoutes); // Use authRoutes
+app.use('/api', adminRoutes); 
 
 // Stripe Payment Intent
-app.post("/api/", async (req, res) => {
+const Stripe = require("stripe");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+app.post("/api/create-payment-intent", async (req, res) => {
   try {
     const { amount, currency } = req.body;
     const paymentIntent = await stripe.paymentIntents.create({

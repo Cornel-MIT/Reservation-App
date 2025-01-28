@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -7,27 +7,31 @@ const CreateAdminScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleCreateAdmin = async () => {
-    setLoading(true);
-    try {
-      const token = await AsyncStorage.getItem('userToken');
+const handleCreateAdmin = async () => {
+  setLoading(true);
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    const role = 'generalAdmin'; // Set role to generalAdmin by default
+    
+    // Log the data
+    console.log({ username, email, password, role, token });
 
-      const response = await axios.post(
-        'http://192.168.1.219/api/admins',
-        { username, email, password },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const response = await axios.post(
+      'http://localhost:5000/api/auth/register',
+      { username, email, password, role },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-      alert(response.data.message);
-      navigation.goBack(); // Navigate back to the Super Admin Dashboard
-    } catch (err) {
-      setError('Failed to create admin');
-      setLoading(false);
-    }
-  };
+    Alert.alert('Success', 'Admin created successfully');
+    navigation.goBack(); // Navigate back to the Super Admin Dashboard
+  } catch (err) {
+    setError('Failed to create admin');
+    setLoading(false);
+  }
+};
 
   return (
     <View style={styles.container}>

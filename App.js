@@ -84,6 +84,7 @@ import RegisterScreen from './frontend/screens/RegisterScreen';
 import AdminDashboardScreen from './frontend/screens/AdminDashboardScreen';
 import SuperAdminDashboardScreen from './frontend/screens/SuperAdminDashboardScreen';
 import CreateAdminScreen from './frontend/screens/CreateAdminScreen';
+import UserDashboard from './frontend/screens/DashboardScreen';
 
 const Stack = createStackNavigator();
 
@@ -119,8 +120,11 @@ export default function App() {
       if (isAuthenticated) {
         if (userRole === 'superadmin') {
           navigationRef.current.navigate('SuperAdminDashboard');
-        } else if (userRole === 'admin') {
+        } else if (userRole === 'generalAdmin') {
           navigationRef.current.navigate('AdminDashboard');
+        }
+        else if (userRole === 'user') {
+          navigationRef.current.navigate('UserDashboard');
         }
       } else {
         navigationRef.current.navigate('Login');
@@ -144,6 +148,7 @@ export default function App() {
         <Stack.Screen name="SuperAdminDashboard" component={SuperAdminDashboardScreen} />
         <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
         <Stack.Screen name="CreateAdmin" component={CreateAdminScreen} />
+        <Stack.Screen name="UserDashboard" component={UserDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
