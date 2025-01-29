@@ -28,7 +28,7 @@ const LoginScreen = () => {
             navigation.navigate('CreateReservation');
             break;
           case 'generalAdmin':
-            navigation.navigate('ManageReservation');
+            navigation.navigate('AdminDashboard');
             break;
           case 'superAdmin':
             navigation.navigate('SuperDashboard');

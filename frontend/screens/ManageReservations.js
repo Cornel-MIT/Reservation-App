@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomPrompt from './prompt'; // Adjust path as necessary
 
 const ManageReservationsScreen = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentAction, setCurrentAction] = useState(null);
+  const [currentId, setCurrentId] = useState(null);
 
   const fetchReservations = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
       const response = await axios.get('http://localhost:5000/api/reservations/all', {
-        headers: { Authorization: `Bearer ${token}` }, // Correct template literal
+        headers: { Authorization: `Bearer ${token}` },
       });
       setReservations(response.data);
     } catch (err) {
@@ -26,48 +30,44 @@ const ManageReservationsScreen = () => {
     fetchReservations();
   }, []);
 
-  const handleApproveReservation = (id) => {
-    Alert.prompt(
-      'Approve Reservation',
-      'Provide feedback for approval:',
-      async (text) => {
-        if (!text) return;
-        try {
-          const token = await AsyncStorage.getItem('userToken');
-          await axios.post(
-            `http://localhost:5000/api/reservations/approve/${id}`,
-            { feedback: text },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          Alert.alert('Success', 'Reservation approved successfully');
-          fetchReservations();
-        } catch (err) {
-          setError('Failed to approve reservation: ' + (err.response?.data?.message || err.message));
-        }
-      }
-    );
+  const handleAction = (action, id) => {
+    setCurrentAction(action);
+    setCurrentId(id);
+    setModalVisible(true);
   };
 
-  const handleDeclineReservation = (id) => {
-    Alert.prompt(
-      'Decline Reservation',
-      'Provide reason for decline:',
-      async (text) => {
-        if (!text) return;
-        try {
-          const token = await AsyncStorage.getItem('userToken');
-          await axios.post(
-            `http://localhost:5000/api/reservations/decline/${id}`,
-            { reason: text },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          Alert.alert('Success', 'Reservation declined successfully');
-          fetchReservations();
-        } catch (err) {
-          setError('Failed to decline reservation: ' + (err.response?.data?.message || err.message));
-        }
-      }
-    );
+  const handleApproveReservation = async (text) => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await axios.post(
+        `http://localhost:5000/api/reservations/approve/${currentId}`,
+        { feedback: text },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      Alert.alert('Success', 'Reservation approved successfully');
+      fetchReservations();
+    } catch (err) {
+      setError('Failed to approve reservation: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setModalVisible(false);
+    }
+  };
+
+  const handleDeclineReservation = async (text) => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await axios.post(
+        `http://localhost:5000/api/reservations/decline/${currentId}`,
+        { reason: text },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      Alert.alert('Success', 'Reservation declined successfully');
+      fetchReservations();
+    } catch (err) {
+      setError('Failed to decline reservation: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setModalVisible(false);
+    }
   };
 
   const renderReservationItem = ({ item }) => (
@@ -78,8 +78,8 @@ const ManageReservationsScreen = () => {
       <Text>{item.numberOfGuests} guests</Text>
       {item.specialRequests && <Text>Special Requests: {item.specialRequests}</Text>}
       <Text>Status: {item.status}</Text>
-      <Button title="Approve" onPress={() => handleApproveReservation(item._id)} />
-      <Button title="Decline" onPress={() => handleDeclineReservation(item._id)} />
+      <Button title="Approve" onPress={() => handleAction('approve', item._id)} />
+      <Button title="Decline" onPress={() => handleAction('decline', item._id)} />
     </View>
   );
 
@@ -96,7 +96,14 @@ const ManageReservationsScreen = () => {
           keyExtractor={(item) => item._id.toString()}
         />
       )}
-    </View> /* Updated closing tag */
+      <CustomPrompt
+        visible={modalVisible}
+        title={currentAction === 'approve' ? 'Approve Reservation' : 'Decline Reservation'}
+        message={currentAction === 'approve' ? 'Provide feedback for approval:' : 'Provide reason for decline:'}
+        onCancel={() => setModalVisible(false)}
+        onSubmit={currentAction === 'approve' ? handleApproveReservation : handleDeclineReservation}
+      />
+    </View>
   );
 };
 
