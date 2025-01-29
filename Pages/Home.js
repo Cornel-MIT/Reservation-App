@@ -12,7 +12,7 @@ import { Rating } from 'react-native-ratings';
 
 const Home = ({ navigation }) => {
   const handleSelector = (restaurant) => {
-    navigation.navigate("cuisineDetails", { restaurant });
+    navigation.navigate("CuisineDetails", { restaurant });
   };
 
   const cuisines = [
