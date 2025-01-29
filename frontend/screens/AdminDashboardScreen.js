@@ -7,7 +7,7 @@ const AdminDashboardScreen = ({ navigation }) => {
       <Text style={styles.header}>Admin Dashboard</Text>
       <Button
         title="Manage Reservations"
-        onPress={() => navigation.navigate('ManageReservations')}
+        onPress={() => navigation.navigate('ManageReservation')}
         style={styles.button}
       />
       <Button
