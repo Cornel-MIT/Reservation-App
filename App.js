@@ -38,7 +38,7 @@ const TabNavigator = () => (
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TableSelection">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="GroundFloor" component={GroundFloor} />
         <Stack.Screen name="FirstFloor" component={FirstFloor} />
         <Stack.Screen name="SecondFloor" component={SecondFloor} />
