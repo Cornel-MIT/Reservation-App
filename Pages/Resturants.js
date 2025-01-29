@@ -39,7 +39,7 @@ const Restaurants = ({ navigation }) => {
                   <Text style={styles.resPlace}>{item.place}</Text>
                 </View>
                 <TouchableOpacity style={styles.reserveButton} onPress={() => handleSelector(item)}>
-                  <Text style={styles.reserveButtonText}>Reserve Now</Text>
+                  <Text style={styles.reserveButtonText}>Reserve Now..</Text>
                 </TouchableOpacity>
               </View>
             </View>
