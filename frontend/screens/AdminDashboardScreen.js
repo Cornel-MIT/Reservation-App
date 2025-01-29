@@ -11,7 +11,7 @@ const AdminDashboardScreen = ({ navigation }) => {
   const fetchReservations = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await axios.get('http://192.168.1.219/api/reservations', {
+      const response = await axios.get('http://localhost:5000/api/reservations', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

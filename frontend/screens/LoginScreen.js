@@ -25,10 +25,10 @@ const LoginScreen = () => {
         console.log('Login successful');
         switch (role) {
           case 'user':
-            navigation.navigate('UserDashboard');
+            navigation.navigate('CreateReservation');
             break;
           case 'generalAdmin':
-            navigation.navigate('AdminDashboard');
+            navigation.navigate('ManageReservation');
             break;
           case 'superAdmin':
             navigation.navigate('SuperDashboard');

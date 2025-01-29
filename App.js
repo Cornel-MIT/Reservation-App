@@ -85,6 +85,8 @@ import AdminDashboardScreen from './frontend/screens/AdminDashboardScreen';
 import SuperAdminDashboardScreen from './frontend/screens/SuperAdminDashboardScreen';
 import CreateAdminScreen from './frontend/screens/CreateAdminScreen';
 import UserDashboard from './frontend/screens/DashboardScreen';
+import Reservations from './frontend/screens/Reservation'
+import ManageReservationsScreen from './frontend/screens/ManageReservations';
 
 const Stack = createStackNavigator();
 
@@ -148,6 +150,8 @@ export default function App() {
         <Stack.Screen name="SuperAdminDashboard" component={SuperAdminDashboardScreen} />
         <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
         <Stack.Screen name="CreateAdmin" component={CreateAdminScreen} />
+        <Stack.Screen name="CreateReservation" component={Reservations} />
+        <Stack.Screen name="ManageReservation" component={ManageReservationsScreen} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
