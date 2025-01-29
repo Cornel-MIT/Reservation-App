@@ -1,10 +1,20 @@
+// models/Reservation.js
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
-const ReservationSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true },
-  date: { type: Date, required: true },
-  status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' }
+
+const reservationSchema = new mongoose.Schema({
+  guestName: { type: String, required: true },
+  phone: { type: String, required: true },
+  email: { type: String },
+  reservationDate: { type: Date, required: true },
+  reservationTime: { type: String, required: true },
+  numberOfGuests: { type: Number, required: true },
+  specialRequests: { type: String },
+  confirmationNumber: { type: String, unique: true, default: uuidv4 },
+  status: { type: String, default: 'pending' },
+  feedback: { type: String },
+  reason: { type: String },
 });
 
-module.exports = mongoose.model('Reservation', ReservationSchema);
+module.exports = mongoose.model('Reservation', reservationSchema);

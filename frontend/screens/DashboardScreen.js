@@ -1,45 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import React from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
-const DashboardScreen = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if (!token) {
-        navigation.navigate('Login');
-        return;
-      }
-
-      try {
-        const response = await axios.get('http://192.168.1.219/api/auth/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(response.data);
-      } catch (error) {
-        console.error(error);
-        navigation.navigate('Login');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
-
+const UserDashboard = ({ navigation }) => {
   return (
-    <View>
-      <Text>Welcome, {user.username}</Text>
+    <View style={styles.container}>
+      <Text style={styles.greeting}>Hi User</Text>
+      <Button
+        title="Make a Reservation"
+        onPress={() => navigation.navigate('CreateReservation')}
+        style={styles.button}
+      />
     </View>
   );
 };
 
-export default DashboardScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  greeting: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  button: {
+    marginTop: 20,
+  },
+});
+
+export default UserDashboard;
