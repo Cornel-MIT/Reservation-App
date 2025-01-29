@@ -10,7 +10,7 @@ const app = express();
 const restaurantRoutes = require("./routes/restaurantRoutes");
 const userRoutes = require('./routes/userRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
-const authRoutes = require('./routes/authRoutes'); // Auth Routes
+const authRoutes = require('./routes/authRoutes'); 
 const adminRoutes = require('./routes/adminRoutes');
 // Middleware
 app.use(cors());
@@ -23,10 +23,10 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
-app.use("/api/restaurants", restaurantRoutes);
+app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reservations', reservationRoutes);
-app.use('/api/auth', authRoutes); // Use authRoutes
+app.use('/api/auth', authRoutes); 
 app.use('/api', adminRoutes); 
 
 // Stripe Payment Intent

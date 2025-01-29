@@ -92,7 +92,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState('');
-  const navigationRef = useRef(null); // Ref to handle navigation programmatically
+  const navigationRef = useRef(null); 
 
   useEffect(() => {
     const checkAuthStatus = async () => {
