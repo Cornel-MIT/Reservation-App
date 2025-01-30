@@ -3,14 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Import Ionicons
-import Restaurants from './Pages/Restaurants'; 
-import Details from './Pages/Details';
-import Reserve from './Pages/Reserve';
-import UserProfileScreen from './Pages/UserProfileScreen';
+import Restaurants from './frontend/Pages/Restaurants'; 
+import Details from './frontend/Pages/Details';
+import Reserve from './frontend/Pages/Reserve';
+import UserProfileScreen from './frontend/Pages/UserProfileScreen';
 
-import Home from './Pages/Home';
-import CuisineDetails from './Pages/CuisineDetails'; 
-import CuisineScreen from './Pages/CuisineScreen';
+import Home from './frontend/Pages/Home';
+import CuisineDetails from './frontend/Pages/CuisineDetails'; 
+import CuisineScreen from './frontend/Pages/CuisineScreen';
 
 
 
@@ -62,6 +62,7 @@ const StackNavigator = () => (
     <Stack.Screen name="Restaurants" component={Restaurants} />
     <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
     <Stack.Screen name="Reserve" component={Reserve} />
+    <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />
 
 
   </Stack.Navigator>

@@ -12,7 +12,7 @@ const Restaurants = ({ navigation }) => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get('https://localhost:5000/api/restaurants');
+      const response = await axios.get('https://192.168.1.235:5000/api/restaurants');
       setRestaurants(response.data);
     } catch (err) {
       console.error(err);

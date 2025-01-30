@@ -22,10 +22,12 @@ const CuisineDetails = ({ navigation }) => {
       <View style={styles.info}> 
       <Text style={styles.title}>{food}</Text>
       <Text style={styles.description}>{description}</Text>
+      <View style={styles.rescontainer}>
       <Image source={Resimage} style={styles.resimage} />
       <Text style={styles.places}>{Places}</Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("reserve")}>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Reserve")}>
         <Text style={styles.buttonText}>Reserve</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -43,11 +45,22 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 16,
   },
+  rescontainer:{
+    backgroundColor: '#fff7f7',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: 'hidden',
+    marginBottom: 20,
+  },
   resimage: {
-    width: '100%',
-    height: 300,
+    width: '30%',
+    height: 100,
     marginBottom: 16,
-    borderRadius: 20,
+    borderRadius: 0,
     padding: 0,
   },
     info: {

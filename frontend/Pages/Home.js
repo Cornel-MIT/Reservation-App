@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
   const cuisines = [
     {
       id: "1",
-      image: require("../assets/Food/galata-food.png"),
+      image: require("../../assets/Food/galata-food.png"),
       food: "Buritto and Fries",
       restaurant: "Galata Bakery and Restaurant",
       description:
@@ -28,13 +28,13 @@ const Home = ({ navigation }) => {
     },
     {
       id: "2",
-      image: require("../assets/Food/gatsby.jpeg"),
+      image: require("../../assets/Food/gatsby.jpeg"),
       food: "Mega Sandwich",
       restaurant: "Gasby",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       Places: "Kempon Park, Johannesburg",
-      Resimage: require("../assets/Res/gatsbybynight.jpg"),
+      Resimage: require("../../assets/Res/gatsbybynight.jpg"),
       rating: 4.0,
     },
   ];
@@ -50,25 +50,9 @@ const Home = ({ navigation }) => {
         <Text style={styles.Greet}>Hello there</Text>
       </View>
 
-      {/* Hero Image */}
-      {/* <View style={styles.imageHero}>
-        <Image
-          style={styles.heroImage}
-          source={require("../assets/Images/siyuan-g_V2rt6iG7A-unsplash.jpg")}
-        />
-        <View style={styles.overlay}>
-          <Text style={styles.heroText}>Les Restaurant Grands</Text>
-        </View>
-      </View> */}
-
-      {/* <Text style={styles.title}>This builds community</Text>
-      <Text style={styles.description}>
-        Through peer-led Shabbat dinners and our signature digital platform, we
-        make community accessible, inclusive, and meaningful for all.
-      </Text> */}
       <View style={styles.title2Container}>
         <Text style={styles.title2}>Best recommended cuisines</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ () =>navigation.navigate('Cuisinescreen')}>
           <Text style={styles.viewbtn}>VIEW MORE</Text>
         </TouchableOpacity>
       </View>
