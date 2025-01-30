@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   rescontainer:{
-    backgroundColor: '#fff7f7',
+    backgroundColor: '#fbfbfb',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
