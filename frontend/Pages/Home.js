@@ -50,22 +50,6 @@ const Home = ({ navigation }) => {
         <Text style={styles.Greet}>Hello there</Text>
       </View>
 
-      {/* Hero Image */}
-      {/* <View style={styles.imageHero}>
-        <Image
-          style={styles.heroImage}
-          source={require("../assets/Images/siyuan-g_V2rt6iG7A-unsplash.jpg")}
-        />
-        <View style={styles.overlay}>
-          <Text style={styles.heroText}>Les Restaurant Grands</Text>
-        </View>
-      </View> */}
-
-      {/* <Text style={styles.title}>This builds community</Text>
-      <Text style={styles.description}>
-        Through peer-led Shabbat dinners and our signature digital platform, we
-        make community accessible, inclusive, and meaningful for all.
-      </Text> */}
       <View style={styles.title2Container}>
         <Text style={styles.title2}>Best recommended cuisines</Text>
         <TouchableOpacity>
@@ -111,9 +95,6 @@ const Home = ({ navigation }) => {
             startingValue={item.rating}
             style={styles.rating}
           />
-          {/* <TouchableOpacity style={styles.reserveButton} onPress={() => handleSelector(item)}>
-            <Text style={styles.reserveButtonText}>Reserve Now</Text>
-          </TouchableOpacity> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -123,14 +104,14 @@ const Home = ({ navigation }) => {
     <FlatList
       ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
-      data={[{ key: 'horizontalList' }]} // Dummy data to render the horizontal list
+      data={[{ key: 'horizontalList' }]} 
       renderItem={() => (
         <FlatList
           data={cuisines}
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
-          horizontal={true} // Enable horizontal scrolling for the cards
-          showsHorizontalScrollIndicator={false} // Hide horizontal scroll indicator
+          horizontal={true} 
+          showsHorizontalScrollIndicator={false} 
         />
       )}
       keyExtractor={(item) => item.key}
@@ -206,7 +187,6 @@ const styles = StyleSheet.create({
   },
   viewbtn: {
     fontSize: 12,
-    // fontWeight: "bold",
     color: "#8A1538",
     textTransform: "uppercase",
   },
@@ -260,7 +240,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginBottom: 20,
-    marginRight: 10, // Add margin to the right for spacing between cards
+    marginRight: 10, 
   },
   card: {
     backgroundColor: '#fff',
@@ -271,7 +251,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     overflow: 'hidden',
-    width: 300, // Set a fixed width for the cards
+    width: 300, 
   },
   image: {
     width: '100%',

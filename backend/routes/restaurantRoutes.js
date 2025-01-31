@@ -5,6 +5,13 @@ const Restaurant = require("../models/restaurantModel");
 
 router.post("/add", async (req, res) => {
   console.log("Received request body:", req.body); 
+
+  const { name, cuisineType, location } = req.body;
+
+  if (!name || !cuisineType || !location) {
+    return res.status(400).json({ message: "Missing required fields: name, cuisineType, location." });
+  }
+
   try {
     const restaurantData = req.body;
     const newRestaurant = new Restaurant(restaurantData);

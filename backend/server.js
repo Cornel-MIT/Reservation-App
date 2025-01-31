@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -12,9 +11,13 @@ const userRoutes = require('./routes/userRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
 const authRoutes = require('./routes/authRoutes'); 
 const adminRoutes = require('./routes/adminRoutes');
+
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+
+// Middleware to handle large JSON payloads and URL-encoded data
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // MongoDB Connection
 mongoose

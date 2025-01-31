@@ -52,7 +52,7 @@ const RestaurantCreationPage = () => {
       operatingHours,
       ambianceDescription,
       featuredMenuItems,
-      photos,
+      photos: photos || [],
       operatingSchedule: {
         days: selectedDays,
         openTime,
@@ -63,7 +63,7 @@ const RestaurantCreationPage = () => {
     console.log('Restaurant Data:', restaurantData);
   
     try {
-      const response = await fetch('http://192.168.1.182:5000/api/restaurants/add', {
+      const response = await fetch('http://192.168.1.169:5000/api/restaurants/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
