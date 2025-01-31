@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
   const cuisines = [
     {
       id: "1",
-      image: require("../assets/Food/galata-food.png"),
+      image: require("../../assets/Food/galata-food.png"),
       food: "Buritto and Fries",
       restaurant: "Galata Bakery and Restaurant",
       description:
@@ -28,13 +28,13 @@ const Home = ({ navigation }) => {
     },
     {
       id: "2",
-      image: require("../assets/Food/gatsby.jpeg"),
+      image: require("../../assets/Food/gatsby.jpeg"),
       food: "Mega Sandwich",
       restaurant: "Gasby",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       Places: "Kempon Park, Johannesburg",
-      Resimage: require("../assets/Res/gatsbybynight.jpg"),
+      Resimage: require("../../assets/Res/gatsbybynight.jpg"),
       rating: 4.0,
     },
   ];

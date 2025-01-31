@@ -9,13 +9,8 @@ import Reserve from './frontend/Pages/Reserve';
 import UserProfileScreen from './frontend/Pages/UserProfileScreen';
 
 import Home from './frontend/Pages/Home';
-import CuisineDetails from './frontend/Pages/CuisineDetails'; 
+import CuisineDetails from './frontend/Pages/cuisineDetails'; 
 import CuisineScreen from './frontend/Pages/CuisineScreen';
-
-
-
-
-
 
 
 const Stack = createStackNavigator();
