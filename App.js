@@ -58,6 +58,7 @@ const StackNavigator = () => (
     <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
     <Stack.Screen name="Reserve" component={Reserve} />
     <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />
+    <Stack.Screen name="Details" component={Details} />
 
 
   </Stack.Navigator>

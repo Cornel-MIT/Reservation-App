@@ -15,14 +15,17 @@ import { useRoute } from "@react-navigation/native";
 
 const Details = ({ navigation }) => {
   const route = useRoute();
-  const { image, name, Descripton, Places } = route.params.restaurant;
+  const { photos, name, ambianceDescription, location, contactDetails, operatingHours } = route.params.restaurant;
   return (
     <ScrollView style={styles.container}>
-      <Image source={image} style={styles.image} />
+      <Image source={{ uri: photos[0] }} style={styles.image} />
+
       <View style={styles.info}> 
       <Text style={styles.title}>{name}</Text>
-      <Text style={styles.description}>{Descripton}</Text>
-      <Text style={styles.places}>{Places}</Text>
+      <Text style={styles.description}>{ambianceDescription}</Text>
+      <Text style={styles.places}>{location}</Text>
+      <Text style={styles.places}>{contactDetails}</Text>
+      <Text style={styles.places}>{operatingHours}</Text>
       </View>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("reserve")}>
         <Text style={styles.buttonText}>Reserve</Text>
