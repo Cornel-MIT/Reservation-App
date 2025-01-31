@@ -1,10 +1,11 @@
+// models/admin.js
 const mongoose = require('mongoose');
 
-const AdminSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['general_admin', 'super_admin'], required: true },
-  restaurants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }],
+  role: { type: String, default: 'generalAdmin' }, // Role defaults to 'generalAdmin'
 });
 
-module.exports = mongoose.model('Admin', AdminSchema);
+module.exports = mongoose.model('Admin', adminSchema);
