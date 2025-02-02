@@ -27,7 +27,7 @@ const Details = ({ navigation }) => {
       <Text style={styles.places}>{contactDetails}</Text>
       <Text style={styles.places}>{operatingHours}</Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("reserve")}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Reserve")}>
         <Text style={styles.buttonText}>Reserve</Text>
       </TouchableOpacity>
     </ScrollView>
