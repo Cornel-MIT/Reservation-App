@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const Restaurants = ({ navigation }) => {
   const [restaurants, setRestaurants] = useState([]);
+
 
   useEffect(() => {
     fetchRestaurants();
@@ -12,7 +15,7 @@ const Restaurants = ({ navigation }) => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get('http://192.168.30.79:5000/api/restaurants');
+      const response = await axios.get('http://192.168.8.194:5000/api/restaurants');
       setRestaurants(response.data);
     } catch (err) {
       console.error(err);

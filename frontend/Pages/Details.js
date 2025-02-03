@@ -1,35 +1,130 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   View,
   Image,
   Text,
   StyleSheet,
-  Button,
   ScrollView,
-  Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
+  Modal,
+  Pressable,
+  TextInput
 } from "react-native";
+import { initStripe, useStripe } from '@stripe/stripe-react-native';
+import axios from 'axios';
 import { useRoute } from "@react-navigation/native";
-
-// const { width } = Dimensions.get("window");
 
 const Details = ({ navigation }) => {
   const route = useRoute();
   const { photos, name, ambianceDescription, location, contactDetails, operatingHours } = route.params.restaurant;
+  const [modalVisible, setModalVisible] = useState(false);
+  const [rName, setRName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+  useEffect(() => {
+    initStripe({
+      publishableKey: "",
+    });
+  }, []);
+
+  const handleReservation = async () => {
+    if (!rName || !date || !time) {
+      Alert.alert('Error', 'Please fill out all fields.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://192.168.8.194:5000/api/create-payment-intent', {
+        amount: 1000, // R10.00 in Rands
+        currency: 'zar',
+      });
+
+      const { clientSecret } = response.data;
+
+      const { error } = await initPaymentSheet({
+        paymentIntentClientSecret: clientSecret,
+        merchantDisplayName: 'Your Restaurant Name',
+      });
+
+      if (error) {
+        Alert.alert('Error', error.message);
+        return;
+      }
+
+      const { paymentError } = await presentPaymentSheet();
+      if (paymentError) {
+        Alert.alert('Error', paymentError.message);
+      } else {
+        Alert.alert('Success', 'Payment successful! Reservation confirmed.');
+        setRName('');
+        setDate('');
+        setTime('');
+        setModalVisible(false);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'An error occurred while processing your payment.');
+      console.error(error);
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Image source={{ uri: photos[0] }} style={styles.image} />
-
       <View style={styles.info}> 
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.description}>{ambianceDescription}</Text>
-      <Text style={styles.places}>{location}</Text>
-      <Text style={styles.places}>{contactDetails}</Text>
-      <Text style={styles.places}>{operatingHours}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.description}>{ambianceDescription}</Text>
+        <Text style={styles.places}>{location}</Text>
+        <Text style={styles.places}>{contactDetails}</Text>
+        <Text style={styles.places}>{operatingHours}</Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Reserve")}>
+      <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
         <Text style={styles.buttonText}>Reserve</Text>
       </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Make a Reservation</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              value={rName}
+              onChangeText={setRName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Date (YYYY-MM-DD)"
+              value={date}
+              onChangeText={setDate}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Time (HH:MM)"
+              value={time}
+              onChangeText={setTime}
+            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleReservation}
+            >
+              <Text style={styles.buttonText}>Confirm</Text>
+            </TouchableOpacity>
+            <Pressable
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -45,18 +140,18 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 16,
   },
-    info: {
-        backgroundColor: '#fff',
-        borderTopEndRadius: 20,
-        borderTopStartRadius: 20,
-        marginTop: -50,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-        overflow: 'hidden',
-    },
+  info: {
+    backgroundColor: '#fff',
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    marginTop: -50,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: 'hidden',
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -87,7 +182,43 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    backgroundColor: "white",
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    bottom: -185,
+    padding: 20,
+    alignItems: "center",
+    width: "100%",
+    height: "50%",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  input: {
+    width: "100%",
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+  },
+  closeButton: {
+    marginTop: 10,
+  },
+  closeButtonText: {
+    color: "#8A1538",
+    fontSize: 16,
+  },
 });
 
 export default Details;

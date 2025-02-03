@@ -11,6 +11,7 @@ import UserProfileScreen from './frontend/Pages/UserProfileScreen';
 import Home from './frontend/Pages/Home';
 import CuisineDetails from './frontend/Pages/cuisineDetails'; 
 import CuisineScreen from './frontend/Pages/CuisineScreen';
+import Search from './frontend/Pages/Search';
 
 
 const Stack = createStackNavigator();
@@ -34,6 +35,9 @@ const TabNavigator = () => (
         else if (route.name === 'UserProfile') {
           iconName = focused ? 'person' : 'person-outline';
         }
+        else if (route.name === 'search') {
+          iconName = focused ? 'search' : 'search-outline';
+        }
         
 
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -44,6 +48,7 @@ const TabNavigator = () => (
     })}
   >
     <Tab.Screen name="Home" component={Home} />
+    <Tab.Screen name="search" component={Search} />
     <Tab.Screen name="Cuisines" component={CuisineScreen} />
     <Tab.Screen name="Restaurants" component={Restaurants} />
     <Tab.Screen name="UserProfile" component={UserProfileScreen} />
