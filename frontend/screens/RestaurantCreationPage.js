@@ -63,7 +63,7 @@ const RestaurantCreationPage = () => {
     console.log('Restaurant Data:', restaurantData);
   
     try {
-      const response = await fetch('http://192.168.1.169:5000/api/restaurants/add', {
+      const response = await fetch('http://192.168.30.79:5000/api/restaurants/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

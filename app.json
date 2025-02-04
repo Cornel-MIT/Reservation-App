@@ -23,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "MAPBOX_ACCESS_TOKEN": "process.env.MAPBOX_ACCESS_TOKEN",
     }
   }
 }
