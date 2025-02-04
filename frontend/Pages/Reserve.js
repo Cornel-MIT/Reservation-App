@@ -12,7 +12,7 @@ const Reserve = () => {
   // Initialize Stripe
   React.useEffect(() => {
     initStripe({
-      publishableKey: 'pk_test_51Q4n1jHICvbDXIB4ZCsX7pjbK2nJ31cAOM4nzHSXTROtjDPxUHpg4GPH5TFKKlT5hqCv4IzOQ37osfSCxbmP1IgM00VSwKbCqs', 
+      publishableKey: '//', 
     });
   }, []);
 
@@ -24,7 +24,7 @@ const Reserve = () => {
 
     try {
       // Step 1: Create a payment intent on your backend
-      const response = await axios.post('http:// 192.168.8.194:5000/api/create-payment-intent', {
+      const response = await axios.post('http://192.168.30.79:5000/api/create-payment-intent', {
         amount: 1000, // R10.00 in Rands I guess
         currency: 'zar',
       });
