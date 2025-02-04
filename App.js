@@ -61,6 +61,7 @@ const StackNavigator = () => (
   <Stack.Navigator initialRouteName="HomeTabs">
     <Stack.Screen name="HomeTabs" component={TabNavigator} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={Restaurants} />
+    <Stack.Screen name="Details" component={Details} />
     <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
     <Stack.Screen name="Reserve" component={Reserve} />
     <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />

@@ -22,6 +22,7 @@ const CuisineDetails = ({ navigation }) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  
 
   const handleReservation = () => {
     if (!name || !date || !time) {
