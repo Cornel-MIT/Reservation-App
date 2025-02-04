@@ -7,7 +7,8 @@ import Restaurants from './frontend/Pages/Restaurants';
 import Details from './frontend/Pages/Details';
 import Reserve from './frontend/Pages/Reserve';
 import UserProfileScreen from './frontend/Pages/UserProfileScreen';
-
+import RegisterScreen from './frontend/screens/RegisterScreen';
+import LoginScreen from './frontend/screens/LoginScreen';
 import Home from './frontend/Pages/Home';
 import CuisineDetails from './frontend/Pages/cuisineDetails'; 
 import CuisineScreen from './frontend/Pages/CuisineScreen';
@@ -63,8 +64,8 @@ const StackNavigator = () => (
     <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
     <Stack.Screen name="Reserve" component={Reserve} />
     <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />
-    <Stack.Screen name="Details" component={Details} />
-
+    <Stack.Screen name="LoginScreen" component={LoginScreen} />
+  <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 
   </Stack.Navigator>
 );

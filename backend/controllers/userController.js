@@ -6,31 +6,52 @@ const nodemailer = require('nodemailer');
 
 exports.registerUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password, gender, cellNo, residentialAddress, dateOfBirth } = req.body;
 
-  
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = new User({ email, password });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user with additional fields
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      gender,
+      cellNo,
+      residentialAddress,
+      dateOfBirth
+    });
+
     await user.save();
 
+    // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ 
-      message: "User registered successfully", 
+    res.status(201).json({
+      message: "User registered successfully",
       token,
-      user: { id: user._id, email: user.email }
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        gender: user.gender,
+        cellNo: user.cellNo,
+        residentialAddress: user.residentialAddress,
+        dateOfBirth: user.dateOfBirth
+      }
     });
   } catch (error) {
     res.status(500).json({ message: "Error registering user", error: error.message });
   }
 };
-
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -134,7 +155,15 @@ exports.getUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
+    res.status(200).json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      gender: user.gender,
+      cellNo: user.cellNo,
+      residentialAddress: user.residentialAddress,
+      dateOfBirth: user.dateOfBirth
+    });
   } catch (error) {
     res.status(500).json({ message: "Error fetching profile", error: error.message });
   }
@@ -142,21 +171,33 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { name, phone, preferences } = req.body;
+    const { username, gender, cellNo, residentialAddress, dateOfBirth } = req.body;
     const user = await User.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (name) user.name = name;
-    if (phone) user.phone = phone;
-    if (preferences) user.preferences = preferences;
+    // Update fields if provided
+    if (username) user.username = username;
+    if (gender) user.gender = gender;
+    if (cellNo) user.cellNo = cellNo;
+    if (residentialAddress) user.residentialAddress = residentialAddress;
+    if (dateOfBirth) user.dateOfBirth = dateOfBirth;
 
     await user.save();
-    res.status(200).json({ 
-      message: "Profile updated successfully", 
-      user: await User.findById(user._id).select('-password') 
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        gender: user.gender,
+        cellNo: user.cellNo,
+        residentialAddress: user.residentialAddress,
+        dateOfBirth: user.dateOfBirth
+      }
     });
   } catch (error) {
     res.status(500).json({ message: "Error updating profile", error: error.message });

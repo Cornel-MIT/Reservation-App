@@ -31,7 +31,11 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'user' }
+  role: { type: String, default: 'user' },
+  gender: { type: String, enum: ['Male', 'Female', 'Other'], required: false },
+  cellNo: { type: String, required: false },
+  residentialAddress: { type: String, required: false },
+  dateOfBirth: { type: Date, required: false }
 });
 
 module.exports = mongoose.model('User', userSchema);

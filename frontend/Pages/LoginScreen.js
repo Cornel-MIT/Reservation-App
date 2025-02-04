@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
           navigation.navigate('AdminDashboard');
           break;
         default:
-          navigation.navigate('UserDashboard');
+          navigation.navigate('UserProfile');
       }
     } catch (error) {
       setError(error.response.data.error);

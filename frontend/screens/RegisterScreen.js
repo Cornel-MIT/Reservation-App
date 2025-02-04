@@ -19,7 +19,7 @@ const RegisterScreen = () => {
     }
   
     try {
-      const response = await axios.post('http://192.168.225.79:5000/api/auth/register', {
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
         username,
         email,
         password,

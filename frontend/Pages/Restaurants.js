@@ -15,7 +15,7 @@ const Restaurants = ({ navigation }) => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get('http://192.168.8.194:5000/api/restaurants');
+      const response = await axios.get('http://localhost:5000/api/restaurants');
       setRestaurants(response.data);
     } catch (err) {
       console.error(err);

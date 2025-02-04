@@ -18,7 +18,7 @@ const LoginScreen = () => {
     }
   
     try {
-      const response = await axios.post('http://192.168.225.79:5000/api/auth/login', { email, password });
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       const { token, role } = response.data;
   
       if (response.status === 200) {
