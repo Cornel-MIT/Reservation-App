@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Rating } from 'react-native-ratings';
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Rating } from "react-native-ratings";
 
 const Home = ({ navigation }) => {
   const handleSelector = (restaurant) => {
@@ -39,12 +39,42 @@ const Home = ({ navigation }) => {
     },
   ];
 
+  const restaurants = [
+    {
+      id: "1",
+      image: require("../../assets/Res/gatsbybynight.jpg"),
+      Name: "Gatsby",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      Places: "Kempton Park, Johannesburg",
+      rating: 5,
+    },
+    {
+      id: "2",
+      image: require("../../assets/Res/Screenshot_20250119_192154_Instagram.jpg"),
+      Name: "Galata",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      Places: "Boksburg, Johannesburg",
+      rating: 5,
+    },
+    {
+      id: "3",
+      image: require("../../assets/Res/Screenshot_20250119_223404_Facebook.jpg"),
+      Name: "MadNomad",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      Places: "Midrand, Johannesburg",
+      rating: 4.5,
+    },
+  ];
+
   const renderHeader = () => (
     <View>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.logo}>Les Restaurant Grands</Text>
-        <Ionicons name="location" size={16} color="gray" />
+        <Ionicons name="person-outline" size={24} color="gray" />
       </View>
       <View style={styles.header2}>
         <Text style={styles.Greet}>Hello there</Text>
@@ -56,6 +86,15 @@ const Home = ({ navigation }) => {
           <Text style={styles.viewbtn}>VIEW MORE</Text>
         </TouchableOpacity>
       </View>
+    </View>
+  );
+
+  const renderRHeader = () => (
+    <View style={styles.title2Container}>
+      <Text style={styles.title2}>Best recommended restaurants</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Restaurants")}>
+        <Text style={styles.viewbtn}>VIEW MORE</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -81,13 +120,46 @@ const Home = ({ navigation }) => {
       <View style={styles.card}>
         <Image source={item.image} style={styles.image} />
         <View style={styles.textContainer}>
-          <Text style={styles.resName}>{item.food}</Text>
-          <Text style={styles.resDesc}>{item.restaurant}</Text>
-         
+          <View style={styles.foodContainer}>
+            <Ionicons name="fast-food" size={19} color="gray" />
+            <Text style={styles.resName}>{item.food}</Text>
+          </View>
+
+          <View style={styles.restaurantContainer}>
+            <Ionicons name="restaurant" size={19} color="gray" />
+            <Text style={styles.resDesc}>{item.restaurant}</Text>
+          </View>
+
           <View style={styles.locationContainer}>
             <Ionicons name="location" size={16} color="gray" />
             <Text style={styles.resPlace}>{item.Places}</Text>
-            
+          </View>
+          <Rating
+            imageSize={20}
+            readonly
+            startingValue={item.rating}
+            style={styles.rating}
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderRCard = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => handleSelector(item)}
+      style={styles.cardContainer}
+    >
+      <View style={styles.card}>
+        <Image source={item.image} style={styles.image} />
+        <View style={styles.textContainer}>
+          <View style={styles.restaurantContainer}>
+            <Ionicons name="restaurant" size={19} color="gray" />
+            <Text style={styles.resName}>{item.Name}</Text>
+          </View>
+          <View style={styles.locationContainer}>
+            <Ionicons name="location" size={16} color="gray" />
+            <Text style={styles.resPlace}>{item.Places}</Text>
           </View>
           <Rating
             imageSize={20}
@@ -104,16 +176,34 @@ const Home = ({ navigation }) => {
     <FlatList
       ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
-      data={[{ key: 'horizontalList' }]} 
-      renderItem={() => (
-        <FlatList
-          data={cuisines}
-          renderItem={renderCard}
-          keyExtractor={(item) => item.id}
-          horizontal={true} 
-          showsHorizontalScrollIndicator={false} 
-        />
-      )}
+      data={[{ key: "horizontalList1" }, { key: "horizontalList2" }]}
+      renderItem={({ item }) => {
+        if (item.key === "horizontalList1") {
+          return (
+            <FlatList
+              data={cuisines}
+              renderItem={renderCard}
+              keyExtractor={(item) => item.id}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          );
+        } else if (item.key === "horizontalList2") {
+          return (
+            <View>
+              {renderRHeader()}
+              <FlatList
+                data={restaurants}
+                renderItem={renderRCard}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
+          );
+        }
+        return null;
+      }}
       keyExtractor={(item) => item.key}
     />
   );
@@ -233,6 +323,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
+  restaurantContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 3,
+  },
+  foodContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 3,
+  },
   resPlace: {
     fontSize: 14,
     color: "gray",
@@ -240,35 +340,36 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginBottom: 20,
-    marginRight: 10, 
+    marginRight: 10,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    overflow: 'hidden',
-    width: 300, 
+    overflow: "hidden",
+    width: 300,
+    padding: 10,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
   },
   reserveButton: {
-    backgroundColor: '#8A1538',
+    backgroundColor: "#8A1538",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   reserveButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
