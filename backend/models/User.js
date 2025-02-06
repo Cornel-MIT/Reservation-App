@@ -24,31 +24,34 @@
 // module.exports = mongoose.model("User", userSchema);
 
 
-// User.js model
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema(
-  {
-    username: { type: String, required: true, trim: true },
-    email: { 
-      type: String, 
-      required: true, 
-      unique: true, 
-      lowercase: true, 
-      match: [/^\S+@\S+\.\S+$/, 'Invalid email format'] 
-    },
-    password: { type: String, required: true, select: false }, // Exclude from queries
-    role: { type: String, enum: ['user', 'admin'], default: 'user' },
-    gender: { type: String, enum: ['Male', 'Female', 'Other'], required: false },
-    cellNo: { 
-      type: String, 
-      required: false, 
-      match: [/^\+?\d{10,15}$/, 'Invalid phone number'] 
-    },
-    residentialAddress: { type: String, required: false, trim: true },
-    dateOfBirth: { type: Date, required: false }
-  },
-  { timestamps: true } // Adds createdAt and updatedAt fields
-);
+// User Schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  gender: { type: String },
+  cellNo: { type: String },
+  residentialAddress: { type: String },
+  dateOfBirth: { type: Date },
+  role: { type: String, default: 'user' }
+});
 
-module.exports = mongoose.model('User', userSchema);
+// Password hash middleware
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// Password comparison method
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+// Create and export the User model
+const User = mongoose.model('User', userSchema);
+module.exports = User;

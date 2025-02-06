@@ -3,10 +3,20 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const { isEmail } = require('validator');
 
+// Registration Function
 exports.registerUser = async (req, res) => {
   try {
     const { username, email, password, gender, cellNo, residentialAddress, dateOfBirth } = req.body;
+
+    // Input validation
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Username, email, and password are required" });
+    }
+    if (!isEmail(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -52,9 +62,19 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ message: "Error registering user", error: error.message });
   }
 };
+
+// Login Function
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Input validation
+    if (!email || !password) {
+      return res.status(400).json({ message: "Both fields are required" });
+    }
+    if (!isEmail(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
 
     // Validate user
     const user = await User.findOne({ email });
@@ -83,6 +103,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+// Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -91,12 +112,17 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Password Reset Functions
+// Forgot Password Function
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email });
 
+    // Validate email
+    if (!email || !isEmail(email)) {
+      return res.status(400).json({ message: "Valid email is required" });
+    }
+
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -125,9 +151,16 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
+// Reset Password Function
 exports.resetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
+
+    // Validate token and password
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: "Token and new password are required" });
+    }
+
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() }
@@ -137,7 +170,9 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Password reset token is invalid or expired" });
     }
 
-    user.password = newPassword;
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
@@ -148,7 +183,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// Profile Management Functions
+// Get User Profile Function
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -169,6 +204,7 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
+// Update User Profile Function
 exports.updateUserProfile = async (req, res) => {
   try {
     const { username, gender, cellNo, residentialAddress, dateOfBirth } = req.body;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import DateTimePicker from '@react-native-community/datetimepicker'; // For Date of Birth picker
 
 const UserProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState({
@@ -10,11 +11,11 @@ const UserProfileScreen = ({ navigation }) => {
     gender: '',
     cellNo: '',
     residentialAddress: '',
-    dateOfBirth: ''
+    dateOfBirth: new Date()
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false); // To handle loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -33,6 +34,8 @@ const UserProfileScreen = ({ navigation }) => {
       } catch (error) {
         console.error('Error fetching profile:', error);
         Alert.alert('Error', 'Failed to load profile. Please try again later.');
+        await AsyncStorage.removeItem('token'); // Log out user if token is invalid
+        navigation.navigate('LoginScreen');
       } finally {
         setLoading(false);
       }
@@ -97,6 +100,7 @@ const UserProfileScreen = ({ navigation }) => {
             value={profile.email}
             onChangeText={(text) => handleChange('email', text)}
             keyboardType="email-address"
+            editable={false} // Email should not be editable
           />
           <Text style={styles.label}>Gender</Text>
           <TextInput
@@ -119,11 +123,11 @@ const UserProfileScreen = ({ navigation }) => {
             onChangeText={(text) => handleChange('residentialAddress', text)}
           />
           <Text style={styles.label}>Date of Birth</Text>
-          <TextInput
-            style={styles.input}
-            value={profile.dateOfBirth}
-            onChangeText={(text) => handleChange('dateOfBirth', text)}
-            placeholder="YYYY-MM-DD"
+          <DateTimePicker
+            value={profile.dateOfBirth ? new Date(profile.dateOfBirth) : new Date()}
+            mode="date"
+            display="default"
+            onChange={(event, selectedDate) => handleChange('dateOfBirth', selectedDate || profile.dateOfBirth)}
           />
           <Button title="Save Changes" onPress={handleSubmit} />
           <Button title="Cancel" onPress={() => setIsEditing(false)} color="red" />
