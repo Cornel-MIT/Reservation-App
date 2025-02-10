@@ -10,12 +10,41 @@ import {
   Alert,
   Modal,
   TextInput,
+  FlatList
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { initStripe, useStripe } from "@stripe/stripe-react-native";
 import axios from "axios";
 import { useRoute } from "@react-navigation/native";
 import { Calendar } from "react-native-calendars";
+
+const timeSlots = [
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "1:00 PM",
+  "1:30 PM",
+  "2:00 PM",
+  "2:30 PM",
+  "3:00 PM",
+  "3:30 PM",
+  "4:00 PM",
+  "4:30 PM",
+  "5:00 PM",
+  "5:30 PM",
+  "6:00 PM",
+  "6:30 PM",
+  "7:00 PM",
+  "7:30 PM",
+  "8:00 PM",
+  "8:30 PM",
+  "9:00 PM",
+  "9:30 PM",
+  "10:00 PM",
+];
 
 const Details = ({ navigation }) => {
   const route = useRoute();
@@ -34,11 +63,12 @@ const Details = ({ navigation }) => {
   const [dateSelected, setDateSelected] = useState("");
   const [time, setTime] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showTimeSlots, setShowTimeSlots] = useState(false);
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-
   useEffect(() => {
     initStripe({
-      publishableKey: "pk_test_51Q4n1jHICvbDXIB4ZCsX7pjbK2nJ31cAOM4nzHSXTROtjDPxUHpg4GPH5TFKKlT5hqCv4IzOQ37osfSCxbmP1IgM00VSwKbCqs",
+      publishableKey:
+        "pk_test_51Q4n1jHICvbDXIB4ZCsX7pjbK2nJ31cAOM4nzHSXTROtjDPxUHpg4GPH5TFKKlT5hqCv4IzOQ37osfSCxbmP1IgM00VSwKbCqs",
     });
   }, []);
 
@@ -53,18 +83,18 @@ const Details = ({ navigation }) => {
         "http://192.168.30.79:5000/api/create-payment-intent",
         { amount: 1000, currency: "zar" }
       );
-      
+
       const { clientSecret } = response.data;
       const { error } = await initPaymentSheet({
         paymentIntentClientSecret: clientSecret,
         merchantDisplayName: "Your Restaurant Name",
       });
-      
+
       if (error) {
         Alert.alert("Error", error.message);
         return;
       }
-      
+
       const { paymentError } = await presentPaymentSheet();
       if (paymentError) {
         Alert.alert("Error", paymentError.message);
@@ -103,11 +133,18 @@ const Details = ({ navigation }) => {
             longitudeDelta: 0.0421,
           }}
         >
-          <Marker coordinate={coordinates} title={name} description={location} />
+          <Marker
+            coordinate={coordinates}
+            title={name}
+            description={location}
+          />
         </MapView>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.buttonText}>Reserve</Text>
       </TouchableOpacity>
 
@@ -125,7 +162,9 @@ const Details = ({ navigation }) => {
               style={styles.Calendarbutton}
               onPress={() => setShowCalendar(!showCalendar)}
             >
-              <Text style={styles.CalendarbuttonText}>{dateSelected || "Select Date"}</Text>
+              <Text style={styles.CalendarbuttonText}>
+                {dateSelected || "Select Date"}
+              </Text>
             </TouchableOpacity>
             {showCalendar && (
               <Calendar
@@ -139,16 +178,41 @@ const Details = ({ navigation }) => {
                 }}
               />
             )}
-            <TextInput
-              style={styles.input}
-              placeholder="Time (HH:MM)"
-              value={time}
-              onChangeText={setTime}
-            />
+            <TouchableOpacity
+              style={styles.dropdownButton}
+              onPress={() => setShowTimeSlots(!showTimeSlots)}
+            >
+              <Text style={styles.dropdownButtonText}>
+                {time || "Select Time"} ▼
+              </Text>
+            </TouchableOpacity>
+
+            {showTimeSlots && (
+              <FlatList
+                data={timeSlots}
+                keyExtractor={(item) => item}
+                style={styles.dropdownList}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.dropdownItem}
+                    onPress={() => {
+                      setTime(item);
+                      setShowTimeSlots(false);
+                    }}
+                  >
+                    <Text>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            )}
+
             <TouchableOpacity style={styles.button} onPress={handleReservation}>
               <Text style={styles.buttonText}>Confirm</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
               <Text style={styles.closeButtonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
@@ -198,7 +262,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 16,
   },
-  Calendarbutton:{
+  Calendarbutton: {
     // backgroundColor: "#8A1538",
     borderWidth: 1,
     borderColor: "gray",
@@ -210,19 +274,68 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 16,
   },
-  CalendarbuttonText:{
-    fontWeight: "bold"
+  CalendarbuttonText: {
+    fontWeight: "bold",
   },
   buttonText: { color: "#fff", fontWeight: "bold" },
-  centeredView: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" },
-  modalView: { backgroundColor: "white", padding: 20, borderRadius: 10, width: "90%" },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    width: "90%",
+  },
   modalTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
-  input: { borderWidth: 1, borderColor: "gray", borderRadius: 5, padding: 8, width: "100%", marginBottom: 10 },
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    padding: 8,
+    width: "100%",
+    marginBottom: 10,
+  },
   closeButton: { marginTop: 10, alignItems: "center" },
   closeButtonText: { color: "#8A1538", fontSize: 16 },
   calendarView: { marginTop: 10, borderRadius: 10, padding: 10 },
   mapContainer: { height: 200, margin: 16 },
   map: { flex: 1 },
+  dropdownButton: {
+    borderWidth: 1,
+    borderColor: "gray",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20,
+    marginHorizontal: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  
+  dropdownButtonText: {
+    fontWeight: "bold",
+  },
+  
+  dropdownList: {
+    maxHeight: 200,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    marginHorizontal: 16,
+    backgroundColor: "#fff",
+  },
+  
+  dropdownItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
 });
 
 export default Details;

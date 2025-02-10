@@ -98,7 +98,7 @@ const Home = ({ navigation }) => {
     </View>
   );
 
- 
+   
 
   const renderCard = ({ item }) => (
     <TouchableOpacity

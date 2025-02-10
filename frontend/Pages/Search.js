@@ -3,10 +3,9 @@ import {
   View,
   TextInput,
   StyleSheet,
-  Pressable,
+  TouchableOpacity,
   Text,
   FlatList,
-  TouchableOpacity,
   Image,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -14,9 +13,9 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 const Search = () => {
-  const [restaurants, setRestaurants] = useState([]); 
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]); 
-  const [query, setQuery] = useState(""); 
+  const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [query, setQuery] = useState("");
   const navigation = useNavigation();
 
   // Fetch all restaurants on component mount
@@ -27,9 +26,9 @@ const Search = () => {
   // Fetch restaurants from the API
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get("http://192.168.30.79:5000/api/restaurants");
+      const response = await axios.get("http://192.168.8.194:5000/api/restaurants");
       setRestaurants(response.data);
-      setFilteredRestaurants(response.data); 
+      setFilteredRestaurants(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -37,17 +36,15 @@ const Search = () => {
 
   // Handle search input change
   const handleSearch = (text) => {
-    setQuery(text); // Update the query state
+    setQuery(text);
     if (text) {
-      // Filter restaurants based on the query
       const filtered = restaurants.filter(
         (restaurant) =>
           restaurant.name.toLowerCase().includes(text.toLowerCase()) ||
           restaurant.location.toLowerCase().includes(text.toLowerCase())
       );
-      setFilteredRestaurants(filtered); 
+      setFilteredRestaurants(filtered);
     } else {
-      // If the query is empty, show all restaurants
       setFilteredRestaurants(restaurants);
     }
   };
@@ -55,7 +52,7 @@ const Search = () => {
   // Clear the search input and reset the filtered list
   const handleClear = () => {
     setQuery("");
-    setFilteredRestaurants(restaurants); 
+    setFilteredRestaurants(restaurants);
   };
 
   // Navigate to the Details page with the selected restaurant
@@ -65,66 +62,63 @@ const Search = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.SearchClearContainter}>
-        <Text style={styles.SearchButtonText} onPress={handleSearch}>
-          Search
-        </Text>
-        <Text style={styles.ClearButtonText} onPress={handleClear}>
-          Clear
-        </Text>
-      </Pressable>
+      {/* Search & Clear Buttons */}
+      <View style={styles.SearchClearContainer}>
+        <TouchableOpacity onPress={() => handleSearch(query)}>
+          <Text style={styles.SearchButtonText}>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleClear}>
+          <Text style={styles.ClearButtonText}>Clear</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Search Bar */}
       <View style={styles.searchSection}>
         <Ionicons style={styles.searchIcon} name="search" size={16} color="gray" />
         <TextInput
           style={styles.input}
           placeholder="Search by name or location..."
           value={query}
-          onChangeText={handleSearch} 
+          onChangeText={handleSearch}
         />
       </View>
-      <View style={styles.container}>
-        <FlatList
-          data={filteredRestaurants} 
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleSelector(item)} style={styles.rescontainer}>
-              <View style={styles.card}>
-                {/* Restaurant Photo */}
-                {item.photos && item.photos.length > 0 && (
-                  <Image source={{ uri: item.photos[0] }} style={styles.image} />
-                )}
 
-                <View style={styles.textContainer}>
-                  {/* Restaurant Name */}
-                  <Text style={styles.resName}>{item.name}</Text>
+      {/* Restaurant List */}
+      <FlatList
+        data={filteredRestaurants}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleSelector(item)} style={styles.resContainer}>
+            
+             
+            <Image
+                source={{ uri: item.photos?.[0] || "https://via.placeholder.com/100" }}
+                style={styles.image}
+              />
 
-                  {/* Location */}
-                  <View style={styles.locationContainer}>
-                    <Ionicons name="location" size={16} color="gray" />
-                    <Text style={styles.resPlace}>{item.location}</Text>
-                  </View>
+              <View style={styles.textContainer}>
+              
+                <Text style={styles.resName}>{item.name}</Text>
 
-                  {/* Contact Details */}
-                  <Text style={styles.resDesc}>Contact: {item.contactDetails}</Text>
-
-                  {/* Operating Hours */}
-                  {item.operatingHours && (
-                    <Text style={styles.resDesc}>Hours: {item.operatingHours}</Text>
-                  )}
-
-                  {/* Reserve Button */}
-                  <TouchableOpacity
-                    style={styles.reserveButton}
-                    onPress={() => handleSelector(item)}
-                  >
-                    <Text style={styles.reserveButtonText}>Reserve Now</Text>
-                  </TouchableOpacity>
+                
+                <View style={styles.locationContainer}>
+                  <Ionicons name="location" size={16} color="gray" />
+                  <Text style={styles.resPlace}>{item.location}</Text>
                 </View>
+
+                
+                <Text style={styles.resDesc}>Contact: {item.contactDetails}</Text>
+
+                
+                {item.operatingHours && <Text style={styles.resDesc}>Hours: {item.operatingHours}</Text>}
+
+  
+
               </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item._id}
-        />
-      </View>
+            
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item._id || item.name}
+      />
     </View>
   );
 };
@@ -152,9 +146,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
   },
-  SearchClearContainter: {
+  SearchClearContainer: {
     flexDirection: "row",
-    gap: 210,
+    justifyContent: "space-between",
     marginTop: 3,
     marginBottom: 10,
   },
@@ -168,9 +162,11 @@ const styles = StyleSheet.create({
     color: "#a10606",
     fontWeight: "bold",
   },
-  rescontainer: {
+  resContainer: {
     flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#fbfbfb",
+    borderRadius: 10,
     padding: 10,
     marginBottom: 20,
   },
