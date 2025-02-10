@@ -82,7 +82,7 @@ const Home = ({ navigation }) => {
 
       <View style={styles.title2Container}>
         <Text style={styles.title2}>Best recommended cuisines</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Cuisines")}>
           <Text style={styles.viewbtn}>VIEW MORE</Text>
         </TouchableOpacity>
       </View>

@@ -63,7 +63,7 @@ const TabNavigator = () => (
 
 // Stack Navigator
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="authscreen">
+  <Stack.Navigator initialRouteName="HomeTabs">
     <Stack.Screen name="HomeTabs" component={TabNavigator} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={Restaurants} />
     <Stack.Screen name="authscreen" component={AuthScreen} />
