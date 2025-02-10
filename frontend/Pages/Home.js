@@ -98,19 +98,7 @@ const Home = ({ navigation }) => {
     </View>
   );
 
-  const renderFooter = () => (
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Find a Dinner</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Restaurants")}
-      >
-        <Text style={styles.buttonText}>Reserve</Text>
-      </TouchableOpacity>
-    </View>
-  );
+ 
 
   const renderCard = ({ item }) => (
     <TouchableOpacity
@@ -175,7 +163,7 @@ const Home = ({ navigation }) => {
   return (
     <FlatList
       ListHeaderComponent={renderHeader}
-      ListFooterComponent={renderFooter}
+      
       data={[{ key: "horizontalList1" }, { key: "horizontalList2" }]}
       renderItem={({ item }) => {
         if (item.key === "horizontalList1") {
