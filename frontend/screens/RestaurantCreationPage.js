@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Image, TouchableOpacity, Switch } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import RNPickerSelect from 'react-native-picker-select'; 
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Switch,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import RNPickerSelect from "react-native-picker-select";
 
 const RestaurantCreationPage = () => {
-  const [name, setName] = useState('');
-  const [cuisineType, setCuisineType] = useState('');
-  const [location, setLocation] = useState('');
-  const [contactDetails, setContactDetails] = useState('');
-  const [operatingHours, setOperatingHours] = useState('');
-  const [ambianceDescription, setAmbianceDescription] = useState('');
-  const [featuredMenuItems, setFeaturedMenuItems] = useState('');
+  const [name, setName] = useState("");
+  const [cuisineType, setCuisineType] = useState("");
+  const [location, setLocation] = useState("");
+  const [contactDetails, setContactDetails] = useState("");
+  const [operatingHours, setOperatingHours] = useState("");
+  const [ambianceDescription, setAmbianceDescription] = useState("");
+  const [featuredMenuItems, setFeaturedMenuItems] = useState("");
   const [photos, setPhotos] = useState([]);
-  const [openTime, setOpenTime] = useState('');
-  const [closeTime, setCloseTime] = useState('');
+  const [openTime, setOpenTime] = useState("");
+  const [closeTime, setCloseTime] = useState("");
   const [selectedDays, setSelectedDays] = useState({
     monday: false,
     tuesday: false,
@@ -26,8 +36,8 @@ const RestaurantCreationPage = () => {
 
   const handleAddPhoto = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions to make this work!");
       return;
     }
 
@@ -59,30 +69,33 @@ const RestaurantCreationPage = () => {
         closeTime,
       },
     };
-  
-    console.log('Restaurant Data:', restaurantData);
-  
+
+    console.log("Restaurant Data:", restaurantData);
+
     try {
-      const response = await fetch('http://192.168.30.79:5000/api/restaurants/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(restaurantData),
-      });
-  
+      const response = await fetch(
+        "http://192.168.30.79:5000/api/restaurants/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(restaurantData),
+        }
+      );
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        alert('Restaurant created successfully!');
+        alert("Restaurant created successfully!");
         console.log(data);
       } else {
-        alert('Error creating restaurant');
+        alert("Error creating restaurant");
         console.error(data);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Something went wrong');
+      console.error("Error:", error);
+      alert("Something went wrong");
     }
   };
 
@@ -91,30 +104,30 @@ const RestaurantCreationPage = () => {
   };
 
   const timeOptions = [
-    { label: '12:00 AM', value: '00:00' },
-    { label: '1:00 AM', value: '01:00' },
-    { label: '2:00 AM', value: '02:00' },
-    { label: '3:00 AM', value: '03:00' },
-    { label: '4:00 AM', value: '04:00' },
-    { label: '5:00 AM', value: '05:00' },
-    { label: '6:00 AM', value: '06:00' },
-    { label: '7:00 AM', value: '07:00' },
-    { label: '8:00 AM', value: '08:00' },
-    { label: '9:00 AM', value: '09:00' },
-    { label: '10:00 AM', value: '10:00' },
-    { label: '11:00 AM', value: '11:00' },
-    { label: '12:00 PM', value: '12:00' },
-    { label: '1:00 PM', value: '13:00' },
-    { label: '2:00 PM', value: '14:00' },
-    { label: '3:00 PM', value: '15:00' },
-    { label: '4:00 PM', value: '16:00' },
-    { label: '5:00 PM', value: '17:00' },
-    { label: '6:00 PM', value: '18:00' },
-    { label: '7:00 PM', value: '19:00' },
-    { label: '8:00 PM', value: '20:00' },
-    { label: '9:00 PM', value: '21:00' },
-    { label: '10:00 PM', value: '22:00' },
-    { label: '11:00 PM', value: '23:00' },
+    { label: "12:00 AM", value: "00:00" },
+    { label: "1:00 AM", value: "01:00" },
+    { label: "2:00 AM", value: "02:00" },
+    { label: "3:00 AM", value: "03:00" },
+    { label: "4:00 AM", value: "04:00" },
+    { label: "5:00 AM", value: "05:00" },
+    { label: "6:00 AM", value: "06:00" },
+    { label: "7:00 AM", value: "07:00" },
+    { label: "8:00 AM", value: "08:00" },
+    { label: "9:00 AM", value: "09:00" },
+    { label: "10:00 AM", value: "10:00" },
+    { label: "11:00 AM", value: "11:00" },
+    { label: "12:00 PM", value: "12:00" },
+    { label: "1:00 PM", value: "13:00" },
+    { label: "2:00 PM", value: "14:00" },
+    { label: "3:00 PM", value: "15:00" },
+    { label: "4:00 PM", value: "16:00" },
+    { label: "5:00 PM", value: "17:00" },
+    { label: "6:00 PM", value: "18:00" },
+    { label: "7:00 PM", value: "19:00" },
+    { label: "8:00 PM", value: "20:00" },
+    { label: "9:00 PM", value: "21:00" },
+    { label: "10:00 PM", value: "22:00" },
+    { label: "11:00 PM", value: "23:00" },
   ];
 
   return (
@@ -178,7 +191,7 @@ const RestaurantCreationPage = () => {
         items={timeOptions}
         value={openTime}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Select Open Time', value: null }} 
+        placeholder={{ label: "Select Open Time", value: null }}
       />
 
       {/* Close Time Dropdown */}
@@ -188,18 +201,29 @@ const RestaurantCreationPage = () => {
         items={timeOptions}
         value={closeTime}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Select Close Time', value: null }} 
+        placeholder={{ label: "Select Close Time", value: null }}
       />
 
       {/* Days of the Week */}
       <Text style={styles.sectionHeader}>Select Days of the Week</Text>
-      {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => (
+
+      {[
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ].map((day) => (
         <View key={day} style={styles.dayCheckboxContainer}>
+          <Text style={styles.dayPick}>
+            {day.charAt(0).toUpperCase() + day.slice(1)}
+          </Text>
           <Switch
             value={selectedDays[day]}
             onValueChange={() => handleDayChange(day)}
           />
-          <Text>{day.charAt(0).toUpperCase() + day.slice(1)}</Text>
         </View>
       ))}
 
@@ -224,55 +248,89 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#FAF3F0",
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
+    color: "#333",
+    textAlign: "center",
   },
   sectionHeader: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 5,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+    color: "#444",
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   inputLabel: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 10,
+    color: "#555",
   },
   addPhotoButton: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 10,
+    backgroundColor: "#007BFF",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+    shadowColor: "#007BFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   addPhotoButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   photosContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 10,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 15,
   },
   photo: {
     width: 100,
     height: 100,
     margin: 5,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   dayCheckboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+
+  dayPick: {
+    fontWeight: "bold",
+    fontSize: 18,
+    flex: 1,
+  },
+
+  submitButton: {
+    marginTop: 20,
+    borderRadius: 10,
+    overflow: "hidden",
   },
 });
 
@@ -280,19 +338,29 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    height: 40,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   inputAndroid: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    height: 40,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });
 

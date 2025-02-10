@@ -38,7 +38,7 @@ const Details = ({ navigation }) => {
 
   useEffect(() => {
     initStripe({
-      publishableKey: "",
+      publishableKey: "pk_test_51Q4n1jHICvbDXIB4ZCsX7pjbK2nJ31cAOM4nzHSXTROtjDPxUHpg4GPH5TFKKlT5hqCv4IzOQ37osfSCxbmP1IgM00VSwKbCqs",
     });
   }, []);
 

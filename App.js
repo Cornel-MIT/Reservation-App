@@ -7,12 +7,17 @@ import Restaurants from './frontend/Pages/Restaurants';
 import Details from './frontend/Pages/Details';
 import Reserve from './frontend/Pages/Reserve';
 import UserProfileScreen from './frontend/Pages/UserProfileScreen';
-import RegisterScreen from './frontend/screens/RegisterScreen';
-import LoginScreen from './frontend/screens/LoginScreen';
 import Home from './frontend/Pages/Home';
 import CuisineDetails from './frontend/Pages/cuisineDetails'; 
 import CuisineScreen from './frontend/Pages/CuisineScreen';
 import Search from './frontend/Pages/Search';
+
+
+
+
+
+import RestaurantCreationPage from './frontend/screens/RestaurantCreationPage';
+import AuthScreen from './frontend/screens/AuthScreens';
 
 
 const Stack = createStackNavigator();
@@ -58,15 +63,15 @@ const TabNavigator = () => (
 
 // Stack Navigator
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="HomeTabs">
+  <Stack.Navigator initialRouteName="authscreen">
     <Stack.Screen name="HomeTabs" component={TabNavigator} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={Restaurants} />
+    <Stack.Screen name="authscreen" component={AuthScreen} />
     <Stack.Screen name="Details" component={Details} />
     <Stack.Screen name="CuisineDetails" component={CuisineDetails} />
     <Stack.Screen name="Reserve" component={Reserve} />
     <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />
-    <Stack.Screen name="LoginScreen" component={LoginScreen} />
-  <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+  <Stack.Screen name="resCred" component={RestaurantCreationPage} />
 
   </Stack.Navigator>
 );
