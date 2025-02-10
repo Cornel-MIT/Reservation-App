@@ -38,7 +38,7 @@ const TabNavigator = () => (
         else if (route.name === 'Restaurants') {
           iconName = focused ? 'restaurant' : 'restaurant-outline';
         }
-        else if (route.name === 'UserProfile') {
+        else if (route.name === 'Profile') {
           iconName = focused ? 'person' : 'person-outline';
         }
         else if (route.name === 'search') {
@@ -57,7 +57,7 @@ const TabNavigator = () => (
     <Tab.Screen name="search" component={Search} />
     <Tab.Screen name="Cuisines" component={CuisineScreen} />
     <Tab.Screen name="Restaurants" component={Restaurants} />
-    <Tab.Screen name="UserProfile" component={UserProfileScreen} />
+    <Tab.Screen name="Profile" component={AuthScreen} />
   </Tab.Navigator>
 );
 
