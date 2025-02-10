@@ -50,7 +50,7 @@ const Details = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://192.168.30.79:5000/api/create-payment-intent",
+        "http://192.168.1.25:5000/api/create-payment-intent",
         { amount: 1000, currency: "zar" }
       );
       

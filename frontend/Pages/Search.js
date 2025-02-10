@@ -27,7 +27,7 @@ const Search = () => {
   // Fetch restaurants from the API
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get("http://192.168.30.79:5000/api/restaurants");
+      const response = await axios.get("http://192.168.1.25:5000/api/restaurants");
       setRestaurants(response.data);
       setFilteredRestaurants(response.data); 
     } catch (err) {

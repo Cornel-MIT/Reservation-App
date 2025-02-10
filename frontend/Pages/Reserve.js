@@ -24,7 +24,7 @@ const Reserve = () => {
 
     try {
       // Step 1: Create a payment intent on your backend
-      const response = await axios.post('http://192.168.30.79:5000/api/create-payment-intent', {
+      const response = await axios.post('http://192.168.1.25:5000/api/create-payment-intent', {
         amount: 1000, // R10.00 in Rands I guess
         currency: 'zar',
       });

@@ -73,7 +73,7 @@ const Home = ({ navigation }) => {
     <View>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.logo}>Les Restaurant Grands</Text>
+        <Text style={styles.logo}>RokuOnigiri (ロクおにぎり)</Text>
         <Ionicons name="person-outline" size={24} color="gray" />
       </View>
       <View style={styles.header2}>
