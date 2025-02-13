@@ -11,7 +11,7 @@ import Home from './frontend/Pages/Home';
 import CuisineDetails from './frontend/Pages/cuisineDetails'; 
 import CuisineScreen from './frontend/Pages/CuisineScreen';
 import Search from './frontend/Pages/Search';
-
+import SuperAdminDashboardScreen from './frontend/screens/SuperAdminDashboardScreen'
 
 
 
@@ -63,7 +63,7 @@ const TabNavigator = () => (
 
 // Stack Navigator
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="HomeTabs">
+  <Stack.Navigator initialRouteName="resCred">
     <Stack.Screen name="HomeTabs" component={TabNavigator} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={Restaurants} />
     <Stack.Screen name="authscreen" component={AuthScreen} />
@@ -72,6 +72,7 @@ const StackNavigator = () => (
     <Stack.Screen name="Reserve" component={Reserve} />
     <Stack.Screen name="Cuisinescreen" component={CuisineScreen} />
   <Stack.Screen name="resCred" component={RestaurantCreationPage} />
+  <Stack.Screen name="super" component={SuperAdminDashboardScreen} />
 
   </Stack.Navigator>
 );

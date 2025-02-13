@@ -53,6 +53,10 @@ const RestaurantCreationPage = () => {
     }
   };
 
+  const handleDeletePhoto = (index) => {
+    setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+  };
+  
   const handleSubmit = async () => {
     const restaurantData = {
       name,
@@ -228,18 +232,35 @@ const RestaurantCreationPage = () => {
       ))}
 
       {/* Visual Elements */}
-      <Text style={styles.sectionHeader}>Visual Elements</Text>
-      <TouchableOpacity style={styles.addPhotoButton} onPress={handleAddPhoto}>
-        <Text style={styles.addPhotoButtonText}>Add Photo</Text>
-      </TouchableOpacity>
-      <View style={styles.photosContainer}>
-        {photos.map((photo, index) => (
-          <Image key={index} source={{ uri: photo }} style={styles.photo} />
-        ))}
+      <View style={styles.sectionVisual}>
+  <Text style={styles.sectionHeader}>Visual Elements</Text>
+
+  {/* Add Photo Button */}
+  <TouchableOpacity style={styles.addPhotoButton} onPress={handleAddPhoto}>
+    <Text style={styles.addPhotoButtonText}>Add Photo</Text>
+  </TouchableOpacity>
+
+  {/* Photos Display */}
+  <View style={styles.photosContainer}>
+    {photos.map((photo, index) => (
+      <View key={index} style={styles.photoWrapper}>
+        <Image source={{ uri: photo }} style={styles.photo} />
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleDeletePhoto(index)}
+        >
+          <Text style={styles.deleteButtonText}>X</Text>
+        </TouchableOpacity>
+      </View>
+    ))}
+  </View>
+        <TouchableOpacity title="Create Restaurant" onPress={handleSubmit} style={styles.create} >
+        <Text style={styles.addPhotoButtonText}>Create Restaurant</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Submit Button */}
-      <Button title="Create Restaurant" onPress={handleSubmit} />
+      
+      
     </ScrollView>
   );
 };
@@ -282,13 +303,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "#555",
   },
+  sectionVisual:{
+    marginBottom: 10,
+    padding: 10,	
+
+  },
   addPhotoButton: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#8A1538",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 15,
-    shadowColor: "#007BFF",
+    shadowColor: "#8A1538",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -312,6 +338,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
   },
+  photoWrapper: {
+    position: "relative",
+    margin: 5,
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    backgroundColor: "red",
+    padding: 5,
+    borderRadius: 10,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  
   dayCheckboxContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -327,14 +371,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  submitButton: {
-    marginTop: 20,
+  create: {
+    backgroundColor: "#8A1538",
+    padding: 15,
     borderRadius: 10,
-    overflow: "hidden",
-  },
+    alignItems: "center",
+    marginBottom: 15,
+    shadowColor: "#8A1538",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  }
+
 });
 
-// Picker Select Styles
+
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     borderWidth: 1,
@@ -353,7 +405,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    padding: 15,
+    padding: 1,
     marginBottom: 15,
     backgroundColor: "#fff",
     shadowColor: "#000",
